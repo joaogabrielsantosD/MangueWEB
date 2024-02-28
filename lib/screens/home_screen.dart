@@ -30,29 +30,16 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RichText(
-                      text: const TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Mangue ',
-                        style: TextStyle(
-                          fontSize: 60,
-                          color: Colors.blue,
-                          fontFamily: 'YourCustomFontForMangue',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'WEB',
-                        style: TextStyle(
-                          fontSize: 60,
-                          color: Colors.red,
-                          fontFamily: 'YourCustomFontForWEB',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  )),
+                  Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Image.asset(
+                      'images/home_logo.png',
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
                   const SizedBox(
                     height: 50,
                   ),
@@ -60,17 +47,67 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        color: Colors.red,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color.fromRGBO(5, 112, 34, 1),
+                              Color.fromRGBO(57, 180, 90, 1),
+                            ],
+                          ),
+                        ),
                         width: 200,
-                        height: 150,
+                        height: 51,
+                        child: const Center(
+                          child: DefaultTextStyle(
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily:
+                                  'Roboto', // Ensure the font is available or specified in pubspec.yaml
+                              color:
+                                  Colors.white, // Optional: Adjust text color
+                            ),
+                            child: Text(
+                              "Live",
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 12,
                       ),
                       Container(
-                        width: 50,
-                      ),
-                      Container(
-                        color: Colors.red,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color.fromRGBO(5, 112, 34, 1),
+                              Color.fromRGBO(57, 180, 90, 1),
+                            ],
+                          ),
+                        ),
                         width: 200,
-                        height: 150,
+                        height: 51,
+                        child: const Center(
+                          child: DefaultTextStyle(
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily:
+                                  'Roboto', // Ensure the font is available or specified in pubspec.yaml
+                              color:
+                                  Colors.white, // Optional: Adjust text color
+                            ),
+                            child: Text(
+                              "Backup",
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),

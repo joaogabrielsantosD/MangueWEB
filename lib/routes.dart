@@ -4,7 +4,9 @@ import 'package:mangueweb/screens/home_screen.dart';
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case 'home':
+      case 'live':
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case 'backup':
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       default:
         return MaterialPageRoute(
