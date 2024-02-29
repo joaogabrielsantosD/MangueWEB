@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -53,6 +54,13 @@ class HomeScreen extends StatelessWidget {
                           },
                           child: Container(
                             decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color.fromRGBO(5, 112, 34, 0.2),
+                                  blurRadius: 20,
+                                  offset: Offset(0, 4),
+                                )
+                              ],
                               borderRadius: BorderRadius.circular(40),
                               gradient: const LinearGradient(
                                 begin: Alignment.topLeft,
@@ -86,11 +94,21 @@ class HomeScreen extends StatelessWidget {
                           width: 12,
                         ),
                         InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, 'backup');
+                          onTap: () async {
+                            await launchUrl(
+                                Uri.parse(
+                                    'https://drive.google.com/drive/folders/1Of6QtYG45qOHRD09pXSU_bf4ZBzcHf9y'),
+                                webOnlyWindowName: '_blank');
                           },
                           child: Container(
                             decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color.fromRGBO(5, 112, 34, 0.2),
+                                  blurRadius: 20,
+                                  offset: Offset(0, 4),
+                                )
+                              ],
                               borderRadius: BorderRadius.circular(40),
                               gradient: const LinearGradient(
                                 begin: Alignment.topLeft,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LiveScreen extends StatefulWidget {
   const LiveScreen({super.key});
@@ -119,8 +120,11 @@ class _LiveScreenState extends State<LiveScreen> {
                     height: 20,
                   ),
                   InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, 'backup');
+                    onTap: () async {
+                      await launchUrl(
+                          Uri.parse(
+                              'https://drive.google.com/drive/folders/1Of6QtYG45qOHRD09pXSU_bf4ZBzcHf9y'),
+                          webOnlyWindowName: '_blank');
                     },
                     child: Container(
                       decoration: BoxDecoration(
