@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_bloc: ^8.1.4
   url_launcher: ^6.2.5
+  fl_chart: ^0.66.2
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +95,8 @@ flutter:
   fonts:
     - family: Roboto
       fonts:
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
         - asset: assets/fonts/Roboto-Bold.ttf
           weight: 700
 
