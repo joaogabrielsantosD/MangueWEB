@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -179,42 +180,208 @@ class _LiveScreenState extends State<LiveScreen> {
                       Row(
                         children: [
                           _dataCard(
-                            Center(
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.red,
-                              ),
-                            ),
-                            250,
+                            const Center(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Text(
+                                    "Temperaturas", // Your text here
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Roboto',
+                                      color: Color.fromRGBO(130, 130, 130, 1),
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(16, 0, 16, 0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "54 °C", // Your text here
+                                            style: TextStyle(
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  Color.fromRGBO(5, 24, 154, 1),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Motor", // Your text here
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Roboto',
+                                              color: Color.fromRGBO(
+                                                  130, 130, 130, 1),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(40, 0, 16, 0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "102 °C", // Your text here
+                                            style: TextStyle(
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  Color.fromRGBO(5, 24, 154, 1),
+                                            ),
+                                          ),
+                                          Text(
+                                            "CVT", // Your text here
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Roboto',
+                                              color: Color.fromRGBO(
+                                                  130, 130, 130, 1),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            )),
+                            300,
                             140,
                           ),
                           const SizedBox(
                             width: 20,
                           ),
                           _dataCard(
-                            Center(
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.red,
-                              ),
-                            ),
-                            410,
-                            140,
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          _dataCard(
-                            Center(
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.red,
-                              ),
-                            ),
-                            140,
+                            const Center(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Text(
+                                    "Bateria", // Your text here
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Roboto',
+                                      color: Color.fromRGBO(130, 130, 130, 1),
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(40, 0, 16, 0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "80%", // Your text here
+                                            style: TextStyle(
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  Color.fromRGBO(5, 24, 154, 1),
+                                            ),
+                                          ),
+                                          Text(
+                                            "SoC", // Your text here
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Roboto',
+                                              color: Color.fromRGBO(
+                                                  130, 130, 130, 1),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(64, 0, 64, 0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "11,6 V", // Your text here
+                                            style: TextStyle(
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  Color.fromRGBO(5, 24, 154, 1),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Tensão", // Your text here
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Roboto',
+                                              color: Color.fromRGBO(
+                                                  130, 130, 130, 1),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(16, 0, 16, 0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "800 mA", // Your text here
+                                            style: TextStyle(
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  Color.fromRGBO(5, 24, 154, 1),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Corrente", // Your text here
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Roboto',
+                                              color: Color.fromRGBO(
+                                                  130, 130, 130, 1),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            )),
+                            520,
                             140,
                           ),
                         ],
@@ -237,10 +404,83 @@ class _LiveScreenState extends State<LiveScreen> {
                         children: [
                           _dataCard(
                             Center(
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.red,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: LineChart(LineChartData(
+                                  lineTouchData: const LineTouchData(
+                                      touchTooltipData: LineTouchTooltipData(
+                                          tooltipBgColor: Colors.white)),
+                                  titlesData: const FlTitlesData(
+                                    show: true,
+                                    rightTitles: AxisTitles(
+                                      sideTitles: SideTitles(showTitles: false),
+                                    ),
+                                    topTitles: AxisTitles(
+                                      sideTitles: SideTitles(showTitles: false),
+                                    ),
+                                    bottomTitles: AxisTitles(
+                                      sideTitles: SideTitles(
+                                        showTitles: true,
+                                        reservedSize: 24,
+                                        interval: 1,
+                                        getTitlesWidget: bottomTitleWidgets,
+                                      ),
+                                    ),
+                                    leftTitles: AxisTitles(
+                                      sideTitles: SideTitles(
+                                        showTitles: true,
+                                        interval: 1,
+                                        reservedSize: 20,
+                                        getTitlesWidget: leftTitleWidgets,
+                                      ),
+                                    ),
+                                  ),
+                                  borderData: FlBorderData(
+                                    show: false,
+                                    border: Border.all(color: Colors.grey),
+                                  ),
+                                  minX: 0,
+                                  maxX: 11,
+                                  minY: 0,
+                                  maxY: 6,
+                                  lineBarsData: [
+                                    LineChartBarData(
+                                      spots: const [
+                                        FlSpot(0, 3),
+                                        FlSpot(2.6, 2),
+                                        FlSpot(4.9, 5),
+                                        FlSpot(6.8, 3.1),
+                                        FlSpot(8, 4),
+                                        FlSpot(9.5, 3),
+                                        FlSpot(11, 4),
+                                      ],
+                                      isCurved: true,
+                                      gradient: const LinearGradient(
+                                        colors: [
+                                          Color.fromRGBO(0, 106, 213, 1),
+                                          Color.fromRGBO(0, 19, 150, 1),
+                                        ],
+                                      ),
+                                      barWidth: 3,
+                                      isStrokeCapRound: true,
+                                      dotData: const FlDotData(
+                                        show: false,
+                                      ),
+                                      belowBarData: BarAreaData(
+                                        show: false,
+                                        gradient: LinearGradient(
+                                          colors: const [
+                                            Color.fromRGBO(90, 106, 213, 1),
+                                            Color.fromRGBO(0, 19, 150, 1),
+                                          ]
+                                              .map((color) =>
+                                                  color.withOpacity(0.3))
+                                              .toList(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )),
                               ),
                             ),
                             410,
@@ -382,5 +622,31 @@ Container _dataCard(Widget child, double width, double height) {
       color: Colors.white,
     ),
     child: child,
+  );
+}
+
+Widget leftTitleWidgets(double value, TitleMeta meta) {
+  const style = TextStyle(
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.bold,
+    fontSize: 12,
+  );
+
+  Text text = Text(value.toString(), style: style, textAlign: TextAlign.left);
+
+  return text;
+}
+
+Widget bottomTitleWidgets(double value, TitleMeta meta) {
+  const style = TextStyle(
+    fontFamily: "Roboto",
+    fontWeight: FontWeight.bold,
+    fontSize: 12,
+  );
+  Widget text = Text(value.toString(), style: style);
+
+  return SideTitleWidget(
+    axisSide: meta.axisSide,
+    child: text,
   );
 }
