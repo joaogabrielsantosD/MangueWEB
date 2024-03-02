@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mangueweb/cubit/live_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,9 +20,37 @@ class _LiveScreenState extends State<LiveScreen> {
       builder: (context, state) {
         if (state is DataState) {
           List<FlSpot> speedSpots = [];
+          List<FlSpot> rpmSpots = [];
+          List<FlSpot> temperatureMotorSpots = [];
+          List<FlSpot> temperatureCVTSpots = [];
+          List<FlSpot> socSpots = [];
+          List<FlSpot> voltageSpots = [];
+          List<FlSpot> curentSpots = [];
+          List<FlSpot> latitudeSpots = [];
+          List<FlSpot> longitudeSpots = [];
+          List<FlSpot> accxSpots = [];
+          List<FlSpot> accySpots = [];
+          List<FlSpot> acczSpots = [];
+          List<FlSpot> rollSpots = [];
+          List<FlSpot> pitchSpots = [];
 
           for (var element in state.packets) {
             speedSpots.add(FlSpot(element.time, element.speed));
+            rpmSpots.add(FlSpot(element.time, element.rpm));
+            temperatureMotorSpots
+                .add(FlSpot(element.time, element.temperatureMotor));
+            temperatureCVTSpots
+                .add(FlSpot(element.time, element.temperatureCVT));
+            socSpots.add(FlSpot(element.time, element.soc));
+            voltageSpots.add(FlSpot(element.time, element.voltage));
+            curentSpots.add(FlSpot(element.time, element.current));
+            latitudeSpots.add(FlSpot(element.time, element.latitude));
+            longitudeSpots.add(FlSpot(element.time, element.longitude));
+            accxSpots.add(FlSpot(element.time, element.accx));
+            accySpots.add(FlSpot(element.time, element.accy));
+            acczSpots.add(FlSpot(element.time, element.accz));
+            rollSpots.add(FlSpot(element.time, element.roll));
+            pitchSpots.add(FlSpot(element.time, element.pitch));
           }
 
           return Material(
@@ -194,12 +221,12 @@ class _LiveScreenState extends State<LiveScreen> {
                             Row(
                               children: [
                                 _dataCard(
-                                  const Center(
+                                  Center(
                                       child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
+                                      const Padding(
                                         padding: EdgeInsets.all(16.0),
                                         child: Text(
                                           "Temperaturas", // Your text here
@@ -215,15 +242,15 @@ class _LiveScreenState extends State<LiveScreen> {
                                       Row(
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 16, 0, 16, 0),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "54 °C", // Your text here
-                                                  style: TextStyle(
+                                                  "${temperatureMotorSpots.last.y} °C", // Your text here
+                                                  style: const TextStyle(
                                                     fontSize: 32,
                                                     fontWeight: FontWeight.w500,
                                                     fontFamily: 'Roboto',
@@ -231,7 +258,7 @@ class _LiveScreenState extends State<LiveScreen> {
                                                         5, 24, 154, 1),
                                                   ),
                                                 ),
-                                                Text(
+                                                const Text(
                                                   "Motor", // Your text here
                                                   style: TextStyle(
                                                     fontSize: 16,
@@ -245,15 +272,15 @@ class _LiveScreenState extends State<LiveScreen> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 40, 0, 16, 0),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "102 °C", // Your text here
-                                                  style: TextStyle(
+                                                  "${temperatureCVTSpots.last.y} °C", // Your text here
+                                                  style: const TextStyle(
                                                     fontSize: 32,
                                                     fontWeight: FontWeight.w500,
                                                     fontFamily: 'Roboto',
@@ -261,7 +288,7 @@ class _LiveScreenState extends State<LiveScreen> {
                                                         5, 24, 154, 1),
                                                   ),
                                                 ),
-                                                Text(
+                                                const Text(
                                                   "CVT", // Your text here
                                                   style: TextStyle(
                                                     fontSize: 16,
@@ -285,12 +312,12 @@ class _LiveScreenState extends State<LiveScreen> {
                                   width: 20,
                                 ),
                                 _dataCard(
-                                  const Center(
+                                  Center(
                                       child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
+                                      const Padding(
                                         padding: EdgeInsets.all(16.0),
                                         child: Text(
                                           "Bateria", // Your text here
@@ -306,15 +333,15 @@ class _LiveScreenState extends State<LiveScreen> {
                                       Row(
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 40, 0, 16, 0),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "80%", // Your text here
-                                                  style: TextStyle(
+                                                  "${socSpots.last.y}%", // Your text here
+                                                  style: const TextStyle(
                                                     fontSize: 32,
                                                     fontWeight: FontWeight.w500,
                                                     fontFamily: 'Roboto',
@@ -322,7 +349,7 @@ class _LiveScreenState extends State<LiveScreen> {
                                                         5, 24, 154, 1),
                                                   ),
                                                 ),
-                                                Text(
+                                                const Text(
                                                   "SoC", // Your text here
                                                   style: TextStyle(
                                                     fontSize: 16,
@@ -336,15 +363,15 @@ class _LiveScreenState extends State<LiveScreen> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                64, 0, 64, 0),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                40, 0, 40, 0),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "11,6 V", // Your text here
-                                                  style: TextStyle(
+                                                  "${voltageSpots.last.y.toStringAsFixed(2)} V", // Your text here
+                                                  style: const TextStyle(
                                                     fontSize: 32,
                                                     fontWeight: FontWeight.w500,
                                                     fontFamily: 'Roboto',
@@ -352,7 +379,7 @@ class _LiveScreenState extends State<LiveScreen> {
                                                         5, 24, 154, 1),
                                                   ),
                                                 ),
-                                                Text(
+                                                const Text(
                                                   "Tensão", // Your text here
                                                   style: TextStyle(
                                                     fontSize: 16,
@@ -366,15 +393,15 @@ class _LiveScreenState extends State<LiveScreen> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 16, 0, 16, 0),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "800 mA", // Your text here
-                                                  style: TextStyle(
+                                                  "${(curentSpots.last.y * 1000).round()} mA", // Your text here
+                                                  style: const TextStyle(
                                                     fontSize: 32,
                                                     fontWeight: FontWeight.w500,
                                                     fontFamily: 'Roboto',
@@ -382,7 +409,7 @@ class _LiveScreenState extends State<LiveScreen> {
                                                         5, 24, 154, 1),
                                                   ),
                                                 ),
-                                                Text(
+                                                const Text(
                                                   "Corrente", // Your text here
                                                   style: TextStyle(
                                                     fontSize: 16,
@@ -453,7 +480,7 @@ class _LiveScreenState extends State<LiveScreen> {
                                           leftTitles: AxisTitles(
                                             sideTitles: SideTitles(
                                               showTitles: true,
-                                              interval: 40,
+                                              interval: 10,
                                               reservedSize: 32,
                                               getTitlesWidget: leftTitleWidgets,
                                             ),
@@ -466,8 +493,8 @@ class _LiveScreenState extends State<LiveScreen> {
                                         ),
                                         minX: speedSpots.first.x,
                                         maxX: speedSpots.last.x,
-                                        minY: -180,
-                                        maxY: 180,
+                                        minY: 0,
+                                        maxY: 60,
                                         lineBarsData: [
                                           LineChartBarData(
                                             spots: speedSpots,
@@ -509,10 +536,83 @@ class _LiveScreenState extends State<LiveScreen> {
                                 ),
                                 _dataCard(
                                   Center(
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      color: Colors.red,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(24.0),
+                                      child: LineChart(LineChartData(
+                                        lineTouchData: const LineTouchData(
+                                            touchTooltipData:
+                                                LineTouchTooltipData(
+                                                    tooltipRoundedRadius: 10,
+                                                    tooltipBgColor:
+                                                        Colors.white)),
+                                        titlesData: const FlTitlesData(
+                                          show: true,
+                                          rightTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false),
+                                          ),
+                                          topTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false),
+                                          ),
+                                          bottomTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                              showTitles: false,
+                                              reservedSize: 24,
+                                              interval: 100,
+                                              getTitlesWidget:
+                                                  bottomTitleWidgets,
+                                            ),
+                                          ),
+                                          leftTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                              showTitles: true,
+                                              interval: 1000,
+                                              reservedSize: 32,
+                                              getTitlesWidget: leftTitleWidgets,
+                                            ),
+                                          ),
+                                        ),
+                                        borderData: FlBorderData(
+                                          show: false,
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                        ),
+                                        minX: rpmSpots.first.x,
+                                        maxX: rpmSpots.last.x,
+                                        minY: 0,
+                                        maxY: 6000,
+                                        lineBarsData: [
+                                          LineChartBarData(
+                                            spots: rpmSpots,
+                                            isCurved: true,
+                                            gradient: const LinearGradient(
+                                              colors: [
+                                                Color.fromRGBO(0, 106, 213, 1),
+                                                Color.fromRGBO(0, 19, 150, 1),
+                                              ],
+                                            ),
+                                            barWidth: 3,
+                                            isStrokeCapRound: true,
+                                            dotData: const FlDotData(
+                                              show: false,
+                                            ),
+                                            belowBarData: BarAreaData(
+                                              show: false,
+                                              gradient: LinearGradient(
+                                                colors: const [
+                                                  Color.fromRGBO(
+                                                      90, 106, 213, 1),
+                                                  Color.fromRGBO(0, 19, 150, 1),
+                                                ]
+                                                    .map((color) =>
+                                                        color.withOpacity(0.3))
+                                                    .toList(),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
                                     ),
                                   ),
                                   410,
@@ -538,10 +638,83 @@ class _LiveScreenState extends State<LiveScreen> {
                               children: [
                                 _dataCard(
                                   Center(
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      color: Colors.red,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(18.0),
+                                      child: LineChart(LineChartData(
+                                        lineTouchData: const LineTouchData(
+                                            touchTooltipData:
+                                                LineTouchTooltipData(
+                                                    tooltipRoundedRadius: 10,
+                                                    tooltipBgColor:
+                                                        Colors.white)),
+                                        titlesData: const FlTitlesData(
+                                          show: true,
+                                          rightTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false),
+                                          ),
+                                          topTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false),
+                                          ),
+                                          bottomTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                              showTitles: false,
+                                              reservedSize: 24,
+                                              interval: 100,
+                                              getTitlesWidget:
+                                                  bottomTitleWidgets,
+                                            ),
+                                          ),
+                                          leftTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                              showTitles: true,
+                                              interval: 0.5,
+                                              reservedSize: 32,
+                                              getTitlesWidget: leftTitleWidgets,
+                                            ),
+                                          ),
+                                        ),
+                                        borderData: FlBorderData(
+                                          show: false,
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                        ),
+                                        minX: accxSpots.first.x,
+                                        maxX: accxSpots.last.x,
+                                        minY: -2,
+                                        maxY: 2,
+                                        lineBarsData: [
+                                          LineChartBarData(
+                                            spots: accxSpots,
+                                            isCurved: true,
+                                            gradient: const LinearGradient(
+                                              colors: [
+                                                Color.fromRGBO(0, 106, 213, 1),
+                                                Color.fromRGBO(0, 19, 150, 1),
+                                              ],
+                                            ),
+                                            barWidth: 3,
+                                            isStrokeCapRound: true,
+                                            dotData: const FlDotData(
+                                              show: false,
+                                            ),
+                                            belowBarData: BarAreaData(
+                                              show: false,
+                                              gradient: LinearGradient(
+                                                colors: const [
+                                                  Color.fromRGBO(
+                                                      90, 106, 213, 1),
+                                                  Color.fromRGBO(0, 19, 150, 1),
+                                                ]
+                                                    .map((color) =>
+                                                        color.withOpacity(0.3))
+                                                    .toList(),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
                                     ),
                                   ),
                                   270,
@@ -552,10 +725,83 @@ class _LiveScreenState extends State<LiveScreen> {
                                 ),
                                 _dataCard(
                                   Center(
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      color: Colors.red,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(18.0),
+                                      child: LineChart(LineChartData(
+                                        lineTouchData: const LineTouchData(
+                                            touchTooltipData:
+                                                LineTouchTooltipData(
+                                                    tooltipRoundedRadius: 10,
+                                                    tooltipBgColor:
+                                                        Colors.white)),
+                                        titlesData: const FlTitlesData(
+                                          show: true,
+                                          rightTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false),
+                                          ),
+                                          topTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false),
+                                          ),
+                                          bottomTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                              showTitles: false,
+                                              reservedSize: 24,
+                                              interval: 100,
+                                              getTitlesWidget:
+                                                  bottomTitleWidgets,
+                                            ),
+                                          ),
+                                          leftTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                              showTitles: true,
+                                              interval: 0.5,
+                                              reservedSize: 32,
+                                              getTitlesWidget: leftTitleWidgets,
+                                            ),
+                                          ),
+                                        ),
+                                        borderData: FlBorderData(
+                                          show: false,
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                        ),
+                                        minX: accySpots.first.x,
+                                        maxX: accySpots.last.x,
+                                        minY: -2,
+                                        maxY: 2,
+                                        lineBarsData: [
+                                          LineChartBarData(
+                                            spots: accySpots,
+                                            isCurved: true,
+                                            gradient: const LinearGradient(
+                                              colors: [
+                                                Color.fromRGBO(0, 106, 213, 1),
+                                                Color.fromRGBO(0, 19, 150, 1),
+                                              ],
+                                            ),
+                                            barWidth: 3,
+                                            isStrokeCapRound: true,
+                                            dotData: const FlDotData(
+                                              show: false,
+                                            ),
+                                            belowBarData: BarAreaData(
+                                              show: false,
+                                              gradient: LinearGradient(
+                                                colors: const [
+                                                  Color.fromRGBO(
+                                                      90, 106, 213, 1),
+                                                  Color.fromRGBO(0, 19, 150, 1),
+                                                ]
+                                                    .map((color) =>
+                                                        color.withOpacity(0.3))
+                                                    .toList(),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
                                     ),
                                   ),
                                   270,
@@ -566,10 +812,83 @@ class _LiveScreenState extends State<LiveScreen> {
                                 ),
                                 _dataCard(
                                   Center(
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      color: Colors.red,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(18.0),
+                                      child: LineChart(LineChartData(
+                                        lineTouchData: const LineTouchData(
+                                            touchTooltipData:
+                                                LineTouchTooltipData(
+                                                    tooltipRoundedRadius: 10,
+                                                    tooltipBgColor:
+                                                        Colors.white)),
+                                        titlesData: const FlTitlesData(
+                                          show: true,
+                                          rightTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false),
+                                          ),
+                                          topTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false),
+                                          ),
+                                          bottomTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                              showTitles: false,
+                                              reservedSize: 24,
+                                              interval: 100,
+                                              getTitlesWidget:
+                                                  bottomTitleWidgets,
+                                            ),
+                                          ),
+                                          leftTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                              showTitles: true,
+                                              interval: 0.5,
+                                              reservedSize: 32,
+                                              getTitlesWidget: leftTitleWidgets,
+                                            ),
+                                          ),
+                                        ),
+                                        borderData: FlBorderData(
+                                          show: false,
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                        ),
+                                        minX: acczSpots.first.x,
+                                        maxX: acczSpots.last.x,
+                                        minY: -2,
+                                        maxY: 2,
+                                        lineBarsData: [
+                                          LineChartBarData(
+                                            spots: acczSpots,
+                                            isCurved: true,
+                                            gradient: const LinearGradient(
+                                              colors: [
+                                                Color.fromRGBO(0, 106, 213, 1),
+                                                Color.fromRGBO(0, 19, 150, 1),
+                                              ],
+                                            ),
+                                            barWidth: 3,
+                                            isStrokeCapRound: true,
+                                            dotData: const FlDotData(
+                                              show: false,
+                                            ),
+                                            belowBarData: BarAreaData(
+                                              show: false,
+                                              gradient: LinearGradient(
+                                                colors: const [
+                                                  Color.fromRGBO(
+                                                      90, 106, 213, 1),
+                                                  Color.fromRGBO(0, 19, 150, 1),
+                                                ]
+                                                    .map((color) =>
+                                                        color.withOpacity(0.3))
+                                                    .toList(),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
                                     ),
                                   ),
                                   270,
