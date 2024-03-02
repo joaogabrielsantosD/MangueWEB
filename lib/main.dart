@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mangueweb/cubit/live_cubit.dart';
 import 'package:mangueweb/routes.dart';
 
 void main() {
@@ -10,10 +12,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'MangueWeb',
-      onGenerateRoute: RouteGenerator.generateRoute,
-    );
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => LiveCubit(),
+          )
+        ],
+        child: const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'MangueWeb',
+          onGenerateRoute: RouteGenerator.generateRoute,
+        ));
   }
 }
