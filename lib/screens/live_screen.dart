@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mangueweb/cubit/live_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,6 +15,14 @@ class LiveScreen extends StatefulWidget {
 }
 
 class _LiveScreenState extends State<LiveScreen> {
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 11,
+  );
+
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<LiveCubit>(context).startEmittingFloats();
@@ -26,8 +37,7 @@ class _LiveScreenState extends State<LiveScreen> {
           List<FlSpot> socSpots = [];
           List<FlSpot> voltageSpots = [];
           List<FlSpot> curentSpots = [];
-          List<FlSpot> latitudeSpots = [];
-          List<FlSpot> longitudeSpots = [];
+          List<LatLng> gpsSpots = [];
           List<FlSpot> accxSpots = [];
           List<FlSpot> accySpots = [];
           List<FlSpot> acczSpots = [];
@@ -44,14 +54,17 @@ class _LiveScreenState extends State<LiveScreen> {
             socSpots.add(FlSpot(element.time, element.soc));
             voltageSpots.add(FlSpot(element.time, element.voltage));
             curentSpots.add(FlSpot(element.time, element.current));
-            latitudeSpots.add(FlSpot(element.time, element.latitude));
-            longitudeSpots.add(FlSpot(element.time, element.longitude));
+            gpsSpots.add(LatLng(element.latitude, element.longitude));
             accxSpots.add(FlSpot(element.time, element.accx));
             accySpots.add(FlSpot(element.time, element.accy));
             acczSpots.add(FlSpot(element.time, element.accz));
             rollSpots.add(FlSpot(element.time, element.roll));
             pitchSpots.add(FlSpot(element.time, element.pitch));
           }
+
+          _controller.future.then((controller) {
+            controller.animateCamera(CameraUpdate.newLatLng(gpsSpots.last));
+          });
 
           return Material(
             color: const Color.fromRGBO(251, 251, 251, 1),
@@ -907,11 +920,23 @@ class _LiveScreenState extends State<LiveScreen> {
                               height: 20,
                             ),
                             _dataCard(
-                              Center(
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  color: Colors.red,
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: GoogleMap(
+                                  mapType: MapType.hybrid,
+                                  initialCameraPosition: _kGooglePlex,
+                                  onMapCreated:
+                                      (GoogleMapController controller) {
+                                    _controller.complete(controller);
+                                  },
+                                  polylines: {
+                                    Polyline(
+                                      polylineId: const PolylineId('route'),
+                                      points: gpsSpots,
+                                      color: Colors.blue,
+                                      width: 5,
+                                    ),
+                                  },
                                 ),
                               ),
                               400,
