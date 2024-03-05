@@ -9,8 +9,7 @@ class RouteGenerator {
       case 'live':
         return MaterialPageRoute(builder: (_) => const LiveScreen());
       default:
-        return MaterialPageRoute(builder: (_) => const LiveScreen());
-      //builder: (_) => const HomeScreen());
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
     }
   }
 }

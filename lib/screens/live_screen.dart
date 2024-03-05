@@ -923,6 +923,7 @@ class _LiveScreenState extends State<LiveScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: GoogleMap(
+                                  zoomControlsEnabled: false,
                                   mapType: MapType.hybrid,
                                   initialCameraPosition: _kGooglePlex,
                                   onMapCreated:
@@ -947,12 +948,33 @@ class _LiveScreenState extends State<LiveScreen> {
                             ),
                             _dataCard(
                               Center(
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  color: Colors.red,
-                                ),
-                              ),
+                                  child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 172,
+                                    child: Transform.rotate(
+                                      angle: pitchSpots.last.y,
+                                      child: Image.asset(
+                                        'images/baja_side.png',
+                                        fit: BoxFit.fitWidth,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 32,
+                                  ),
+                                  SizedBox(
+                                    width: 129,
+                                    child: Transform.rotate(
+                                        angle: rollSpots.last.y,
+                                        child: Image.asset(
+                                          'images/baja_front.png',
+                                          fit: BoxFit.fitWidth,
+                                        )),
+                                  ),
+                                ],
+                              )),
                               400,
                               285,
                             ),
