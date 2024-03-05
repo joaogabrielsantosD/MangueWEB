@@ -7,6 +7,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mangueweb/cubit/live_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+int spotIndex = 0;
+
 class LiveScreen extends StatefulWidget {
   const LiveScreen({super.key});
 
@@ -25,8 +27,6 @@ class _LiveScreenState extends State<LiveScreen> {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<LiveCubit>(context).startEmittingFloats();
-
     return BlocBuilder<LiveCubit, LiveState>(
       builder: (context, state) {
         if (state is DataState) {
@@ -254,64 +254,84 @@ class _LiveScreenState extends State<LiveScreen> {
                                       ),
                                       Row(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                16, 0, 16, 0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "${temperatureMotorSpots.last.y} °C", // Your text here
-                                                  style: const TextStyle(
-                                                    fontSize: 32,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Roboto',
-                                                    color: Color.fromRGBO(
-                                                        5, 24, 154, 1),
+                                          InkWell(
+                                            onTap: () {
+                                              spotIndex = 2;
+                                              Navigator.pushNamed(
+                                                  context, 'graph');
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      16, 0, 16, 0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${temperatureMotorSpots.last.y} °C", // Your text here
+                                                    style: const TextStyle(
+                                                      fontSize: 32,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto',
+                                                      color: Color.fromRGBO(
+                                                          5, 24, 154, 1),
+                                                    ),
                                                   ),
-                                                ),
-                                                const Text(
-                                                  "Motor", // Your text here
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Roboto',
-                                                    color: Color.fromRGBO(
-                                                        130, 130, 130, 1),
+                                                  const Text(
+                                                    "Motor", // Your text here
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto',
+                                                      color: Color.fromRGBO(
+                                                          130, 130, 130, 1),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                40, 0, 16, 0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "${temperatureCVTSpots.last.y} °C", // Your text here
-                                                  style: const TextStyle(
-                                                    fontSize: 32,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Roboto',
-                                                    color: Color.fromRGBO(
-                                                        5, 24, 154, 1),
+                                          InkWell(
+                                            onTap: () {
+                                              spotIndex = 3;
+                                              Navigator.pushNamed(
+                                                  context, 'graph');
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      40, 0, 16, 0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${temperatureCVTSpots.last.y} °C", // Your text here
+                                                    style: const TextStyle(
+                                                      fontSize: 32,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto',
+                                                      color: Color.fromRGBO(
+                                                          5, 24, 154, 1),
+                                                    ),
                                                   ),
-                                                ),
-                                                const Text(
-                                                  "CVT", // Your text here
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Roboto',
-                                                    color: Color.fromRGBO(
-                                                        130, 130, 130, 1),
+                                                  const Text(
+                                                    "CVT", // Your text here
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto',
+                                                      color: Color.fromRGBO(
+                                                          130, 130, 130, 1),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           )
                                         ],
@@ -345,94 +365,124 @@ class _LiveScreenState extends State<LiveScreen> {
                                       ),
                                       Row(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                40, 0, 16, 0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "${socSpots.last.y}%", // Your text here
-                                                  style: const TextStyle(
-                                                    fontSize: 32,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Roboto',
-                                                    color: Color.fromRGBO(
-                                                        5, 24, 154, 1),
+                                          InkWell(
+                                            onTap: () {
+                                              spotIndex = 4;
+                                              Navigator.pushNamed(
+                                                  context, 'graph');
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      40, 0, 16, 0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${socSpots.last.y}%", // Your text here
+                                                    style: const TextStyle(
+                                                      fontSize: 32,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto',
+                                                      color: Color.fromRGBO(
+                                                          5, 24, 154, 1),
+                                                    ),
                                                   ),
-                                                ),
-                                                const Text(
-                                                  "SoC", // Your text here
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Roboto',
-                                                    color: Color.fromRGBO(
-                                                        130, 130, 130, 1),
+                                                  const Text(
+                                                    "SoC", // Your text here
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto',
+                                                      color: Color.fromRGBO(
+                                                          130, 130, 130, 1),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                40, 0, 40, 0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "${voltageSpots.last.y.toStringAsFixed(2)} V", // Your text here
-                                                  style: const TextStyle(
-                                                    fontSize: 32,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Roboto',
-                                                    color: Color.fromRGBO(
-                                                        5, 24, 154, 1),
+                                          InkWell(
+                                            onTap: () {
+                                              spotIndex = 5;
+                                              Navigator.pushNamed(
+                                                  context, 'graph');
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      40, 0, 40, 0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${voltageSpots.last.y.toStringAsFixed(2)} V", // Your text here
+                                                    style: const TextStyle(
+                                                      fontSize: 32,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto',
+                                                      color: Color.fromRGBO(
+                                                          5, 24, 154, 1),
+                                                    ),
                                                   ),
-                                                ),
-                                                const Text(
-                                                  "Tensão", // Your text here
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Roboto',
-                                                    color: Color.fromRGBO(
-                                                        130, 130, 130, 1),
+                                                  const Text(
+                                                    "Tensão", // Your text here
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto',
+                                                      color: Color.fromRGBO(
+                                                          130, 130, 130, 1),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                16, 0, 16, 0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "${(curentSpots.last.y * 1000).round()} mA", // Your text here
-                                                  style: const TextStyle(
-                                                    fontSize: 32,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Roboto',
-                                                    color: Color.fromRGBO(
-                                                        5, 24, 154, 1),
+                                          InkWell(
+                                            onTap: () {
+                                              spotIndex = 6;
+                                              Navigator.pushNamed(
+                                                  context, 'graph');
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      16, 0, 16, 0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${(curentSpots.last.y * 1000).round()} mA", // Your text here
+                                                    style: const TextStyle(
+                                                      fontSize: 32,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto',
+                                                      color: Color.fromRGBO(
+                                                          5, 24, 154, 1),
+                                                    ),
                                                   ),
-                                                ),
-                                                const Text(
-                                                  "Corrente", // Your text here
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Roboto',
-                                                    color: Color.fromRGBO(
-                                                        130, 130, 130, 1),
+                                                  const Text(
+                                                    "Corrente", // Your text here
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto',
+                                                      color: Color.fromRGBO(
+                                                          130, 130, 130, 1),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -465,9 +515,20 @@ class _LiveScreenState extends State<LiveScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(24.0),
                                       child: LineChart(LineChartData(
-                                        lineTouchData: const LineTouchData(
+                                        lineTouchData: LineTouchData(
+                                            touchCallback: (event, response) {
+                                              if (event is FlTapUpEvent) {
+                                                if (response != null &&
+                                                    response.lineBarSpots !=
+                                                        null) {
+                                                  spotIndex = 0;
+                                                  Navigator.pushNamed(
+                                                      context, 'graph');
+                                                }
+                                              }
+                                            },
                                             touchTooltipData:
-                                                LineTouchTooltipData(
+                                                const LineTouchTooltipData(
                                                     tooltipRoundedRadius: 10,
                                                     tooltipBgColor:
                                                         Colors.white)),
@@ -552,9 +613,20 @@ class _LiveScreenState extends State<LiveScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(24.0),
                                       child: LineChart(LineChartData(
-                                        lineTouchData: const LineTouchData(
+                                        lineTouchData: LineTouchData(
+                                            touchCallback: (event, response) {
+                                              if (event is FlTapUpEvent) {
+                                                if (response != null &&
+                                                    response.lineBarSpots !=
+                                                        null) {
+                                                  spotIndex = 1;
+                                                  Navigator.pushNamed(
+                                                      context, 'graph');
+                                                }
+                                              }
+                                            },
                                             touchTooltipData:
-                                                LineTouchTooltipData(
+                                                const LineTouchTooltipData(
                                                     tooltipRoundedRadius: 10,
                                                     tooltipBgColor:
                                                         Colors.white)),
@@ -654,9 +726,20 @@ class _LiveScreenState extends State<LiveScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(18.0),
                                       child: LineChart(LineChartData(
-                                        lineTouchData: const LineTouchData(
+                                        lineTouchData: LineTouchData(
+                                            touchCallback: (event, response) {
+                                              if (event is FlTapUpEvent) {
+                                                if (response != null &&
+                                                    response.lineBarSpots !=
+                                                        null) {
+                                                  spotIndex = 7;
+                                                  Navigator.pushNamed(
+                                                      context, 'graph');
+                                                }
+                                              }
+                                            },
                                             touchTooltipData:
-                                                LineTouchTooltipData(
+                                                const LineTouchTooltipData(
                                                     tooltipRoundedRadius: 10,
                                                     tooltipBgColor:
                                                         Colors.white)),
@@ -741,9 +824,20 @@ class _LiveScreenState extends State<LiveScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(18.0),
                                       child: LineChart(LineChartData(
-                                        lineTouchData: const LineTouchData(
+                                        lineTouchData: LineTouchData(
+                                            touchCallback: (event, response) {
+                                              if (event is FlTapUpEvent) {
+                                                if (response != null &&
+                                                    response.lineBarSpots !=
+                                                        null) {
+                                                  spotIndex = 8;
+                                                  Navigator.pushNamed(
+                                                      context, 'graph');
+                                                }
+                                              }
+                                            },
                                             touchTooltipData:
-                                                LineTouchTooltipData(
+                                                const LineTouchTooltipData(
                                                     tooltipRoundedRadius: 10,
                                                     tooltipBgColor:
                                                         Colors.white)),
@@ -828,9 +922,20 @@ class _LiveScreenState extends State<LiveScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(18.0),
                                       child: LineChart(LineChartData(
-                                        lineTouchData: const LineTouchData(
+                                        lineTouchData: LineTouchData(
+                                            touchCallback: (event, response) {
+                                              if (event is FlTapUpEvent) {
+                                                if (response != null &&
+                                                    response.lineBarSpots !=
+                                                        null) {
+                                                  spotIndex = 9;
+                                                  Navigator.pushNamed(
+                                                      context, 'graph');
+                                                }
+                                              }
+                                            },
                                             touchTooltipData:
-                                                LineTouchTooltipData(
+                                                const LineTouchTooltipData(
                                                     tooltipRoundedRadius: 10,
                                                     tooltipBgColor:
                                                         Colors.white)),
@@ -951,27 +1056,43 @@ class _LiveScreenState extends State<LiveScreen> {
                                   child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SizedBox(
-                                    width: 172,
-                                    child: Transform.rotate(
-                                      angle: pitchSpots.last.y,
-                                      child: Image.asset(
-                                        'images/baja_side.png',
-                                        fit: BoxFit.fitWidth,
+                                  InkWell(
+                                    onTap: () {
+                                      spotIndex = 11;
+                                      Navigator.pushNamed(context, 'graph');
+                                    },
+                                    child: SizedBox(
+                                      width: 172,
+                                      child: Transform.rotate(
+                                        angle: pitchSpots.last.y *
+                                            3.14159265358979323 /
+                                            180,
+                                        child: Image.asset(
+                                          'images/baja_side.png',
+                                          fit: BoxFit.fitWidth,
+                                        ),
                                       ),
                                     ),
                                   ),
                                   const SizedBox(
                                     width: 32,
                                   ),
-                                  SizedBox(
-                                    width: 129,
-                                    child: Transform.rotate(
-                                        angle: rollSpots.last.y,
-                                        child: Image.asset(
-                                          'images/baja_front.png',
-                                          fit: BoxFit.fitWidth,
-                                        )),
+                                  InkWell(
+                                    onTap: () {
+                                      spotIndex = 10;
+                                      Navigator.pushNamed(context, 'graph');
+                                    },
+                                    child: SizedBox(
+                                      width: 129,
+                                      child: Transform.rotate(
+                                          angle: rollSpots.last.y *
+                                              3.14159265358979323 /
+                                              180,
+                                          child: Image.asset(
+                                            'images/baja_front.png',
+                                            fit: BoxFit.fitWidth,
+                                          )),
+                                    ),
                                   ),
                                 ],
                               )),
