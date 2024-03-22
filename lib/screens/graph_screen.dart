@@ -284,7 +284,7 @@ class _GraphScreenState extends State<GraphScreen> {
                         onTap: () async {
                           await launchUrl(
                               Uri.parse(
-                                  'https://drive.google.com/drive/folders/1Of6QtYG45qOHRD09pXSU_bf4ZBzcHf9y'),
+                                  'https://drive.google.com/drive/folders/1bhZz_3j1MWmD68m_6fV16VC4WkOj0_Dd?usp=sharing'),
                               webOnlyWindowName: '_blank');
                         },
                         child: Container(
@@ -380,7 +380,7 @@ class _GraphScreenState extends State<GraphScreen> {
                                         sideTitles: SideTitles(
                                           showTitles: true,
                                           interval: selectedSpotsDiv,
-                                          reservedSize: 32,
+                                          reservedSize: 50,
                                           getTitlesWidget: leftTitleWidgets,
                                         ),
                                       ),
