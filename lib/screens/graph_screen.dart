@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:ui';
+import 'dart:html' as html;
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,46 +22,67 @@ class GraphScreen extends StatefulWidget {
 
 class _GraphScreenState extends State<GraphScreen> {
   String dropdownValue = 'Tipo de teste';
-  List<String> dropdownItems = ['Tipo de teste', 'One', 'Two', 'Three'];
+  TextEditingController rangeStart = TextEditingController();
+  TextEditingController rangeEnd = TextEditingController();
+  TextEditingController plotName = TextEditingController();
+  TextEditingController plotDescription = TextEditingController();
+  GlobalKey globalKey = GlobalKey();
+
+  List<String> dropdownItems = ['Tipo de teste', 'AV', 'Freio', 'Suspensão'];
   bool paused = false;
+
+  List<FlSpot> speedSpots = [];
+  List<FlSpot> rpmSpots = [];
+  List<FlSpot> temperatureMotorSpots = [];
+  List<FlSpot> temperatureCVTSpots = [];
+  List<FlSpot> socSpots = [];
+  List<FlSpot> voltageSpots = [];
+  List<FlSpot> curentSpots = [];
+  List<LatLng> gpsSpots = [];
+  List<FlSpot> accxSpots = [];
+  List<FlSpot> accySpots = [];
+  List<FlSpot> acczSpots = [];
+  List<FlSpot> rollSpots = [];
+  List<FlSpot> pitchSpots = [];
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LiveCubit, LiveState>(
       builder: (context, state) {
         if (state is DataState) {
-          List<FlSpot> speedSpots = [];
-          List<FlSpot> rpmSpots = [];
-          List<FlSpot> temperatureMotorSpots = [];
-          List<FlSpot> temperatureCVTSpots = [];
-          List<FlSpot> socSpots = [];
-          List<FlSpot> voltageSpots = [];
-          List<FlSpot> curentSpots = [];
-          List<LatLng> gpsSpots = [];
-          List<FlSpot> accxSpots = [];
-          List<FlSpot> accySpots = [];
-          List<FlSpot> acczSpots = [];
-          List<FlSpot> rollSpots = [];
-          List<FlSpot> pitchSpots = [];
+          if (!paused) {
+            speedSpots = [];
+            rpmSpots = [];
+            temperatureMotorSpots = [];
+            temperatureCVTSpots = [];
+            socSpots = [];
+            voltageSpots = [];
+            curentSpots = [];
+            gpsSpots = [];
+            accxSpots = [];
+            accySpots = [];
+            acczSpots = [];
+            rollSpots = [];
+            pitchSpots = [];
 
-          for (var element in state.packets) {
-            speedSpots.add(FlSpot(element.time, element.speed));
-            rpmSpots.add(FlSpot(element.time, element.rpm));
-            temperatureMotorSpots
-                .add(FlSpot(element.time, element.temperatureMotor));
-            temperatureCVTSpots
-                .add(FlSpot(element.time, element.temperatureCVT));
-            socSpots.add(FlSpot(element.time, element.soc));
-            voltageSpots.add(FlSpot(element.time, element.voltage));
-            curentSpots.add(FlSpot(element.time, element.current));
-            gpsSpots.add(LatLng(element.latitude, element.longitude));
-            accxSpots.add(FlSpot(element.time, element.accx));
-            accySpots.add(FlSpot(element.time, element.accy));
-            acczSpots.add(FlSpot(element.time, element.accz));
-            rollSpots.add(FlSpot(element.time, element.roll));
-            pitchSpots.add(FlSpot(element.time, element.pitch));
+            for (var element in state.packets) {
+              speedSpots.add(FlSpot(element.time, element.speed));
+              rpmSpots.add(FlSpot(element.time, element.rpm));
+              temperatureMotorSpots
+                  .add(FlSpot(element.time, element.temperatureMotor));
+              temperatureCVTSpots
+                  .add(FlSpot(element.time, element.temperatureCVT));
+              socSpots.add(FlSpot(element.time, element.soc));
+              voltageSpots.add(FlSpot(element.time, element.voltage));
+              curentSpots.add(FlSpot(element.time, element.current));
+              gpsSpots.add(LatLng(element.latitude, element.longitude));
+              accxSpots.add(FlSpot(element.time, element.accx));
+              accySpots.add(FlSpot(element.time, element.accy));
+              acczSpots.add(FlSpot(element.time, element.accz));
+              rollSpots.add(FlSpot(element.time, element.roll));
+              pitchSpots.add(FlSpot(element.time, element.pitch));
+            }
           }
-
           List<List<FlSpot>> allSpots = [
             speedSpots,
             rpmSpots,
@@ -86,7 +112,7 @@ class _GraphScreenState extends State<GraphScreen> {
               selectedSpotsName = "Velocidade";
             case 1:
               selectedSpotsMin = 0;
-              selectedSpotsMax = 6000;
+              selectedSpotsMax = 10000;
               selectedSpotsDiv = 1000;
               selectedSpotsName = "Rotação";
             case 2:
@@ -304,97 +330,102 @@ class _GraphScreenState extends State<GraphScreen> {
                         const SizedBox(
                           width: 20,
                         ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                selectedSpotsName,
-                                style: const TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: 'Roboto',
-                                  color: Color.fromRGBO(130, 130, 130, 1),
+                        RepaintBoundary(
+                          key: globalKey,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 20,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 64,
-                              ),
-                              SizedBox(
-                                width: 920,
-                                height: 500,
-                                child: LineChart(LineChartData(
-                                  lineTouchData: const LineTouchData(
-                                      touchTooltipData: LineTouchTooltipData(
-                                          tooltipRoundedRadius: 10,
-                                          tooltipBgColor: Colors.white)),
-                                  titlesData: FlTitlesData(
-                                    show: true,
-                                    rightTitles: const AxisTitles(
-                                      sideTitles: SideTitles(showTitles: false),
-                                    ),
-                                    topTitles: const AxisTitles(
-                                      sideTitles: SideTitles(showTitles: false),
-                                    ),
-                                    bottomTitles: const AxisTitles(
-                                      sideTitles: SideTitles(
-                                        showTitles: true,
-                                        reservedSize: 24,
-                                        interval: 50,
-                                        getTitlesWidget: bottomTitleWidgets,
-                                      ),
-                                    ),
-                                    leftTitles: AxisTitles(
-                                      sideTitles: SideTitles(
-                                        showTitles: true,
-                                        interval: selectedSpotsDiv,
-                                        reservedSize: 32,
-                                        getTitlesWidget: leftTitleWidgets,
-                                      ),
-                                    ),
+                                Text(
+                                  selectedSpotsName,
+                                  style: const TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: 'Roboto',
+                                    color: Color.fromRGBO(130, 130, 130, 1),
                                   ),
-                                  borderData: FlBorderData(
-                                    show: true,
-                                    border: Border.all(color: Colors.grey),
-                                  ),
-                                  minX: selectedSpots.first.x,
-                                  maxX: selectedSpots.last.x,
-                                  minY: selectedSpotsMin,
-                                  maxY: selectedSpotsMax,
-                                  lineBarsData: [
-                                    LineChartBarData(
-                                      spots: selectedSpots,
-                                      isCurved: true,
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          Color.fromRGBO(0, 106, 213, 1),
-                                          Color.fromRGBO(0, 19, 150, 1),
-                                        ],
+                                ),
+                                const SizedBox(
+                                  height: 64,
+                                ),
+                                SizedBox(
+                                  width: 920,
+                                  height: 500,
+                                  child: LineChart(LineChartData(
+                                    lineTouchData: const LineTouchData(
+                                        touchTooltipData: LineTouchTooltipData(
+                                            tooltipRoundedRadius: 10,
+                                            tooltipBgColor: Colors.white)),
+                                    titlesData: FlTitlesData(
+                                      show: true,
+                                      rightTitles: const AxisTitles(
+                                        sideTitles:
+                                            SideTitles(showTitles: false),
                                       ),
-                                      barWidth: 3,
-                                      isStrokeCapRound: true,
-                                      dotData: const FlDotData(
-                                        show: false,
+                                      topTitles: const AxisTitles(
+                                        sideTitles:
+                                            SideTitles(showTitles: false),
                                       ),
-                                      belowBarData: BarAreaData(
-                                        show: false,
-                                        gradient: LinearGradient(
-                                          colors: const [
-                                            Color.fromRGBO(90, 106, 213, 1),
-                                            Color.fromRGBO(0, 19, 150, 1),
-                                          ]
-                                              .map((color) =>
-                                                  color.withOpacity(0.3))
-                                              .toList(),
+                                      bottomTitles: const AxisTitles(
+                                        sideTitles: SideTitles(
+                                          showTitles: true,
+                                          reservedSize: 24,
+                                          interval: 50,
+                                          getTitlesWidget: bottomTitleWidgets,
+                                        ),
+                                      ),
+                                      leftTitles: AxisTitles(
+                                        sideTitles: SideTitles(
+                                          showTitles: true,
+                                          interval: selectedSpotsDiv,
+                                          reservedSize: 32,
+                                          getTitlesWidget: leftTitleWidgets,
                                         ),
                                       ),
                                     ),
-                                  ],
-                                )),
-                              )
-                            ]),
+                                    borderData: FlBorderData(
+                                      show: true,
+                                      border: Border.all(color: Colors.grey),
+                                    ),
+                                    minX: selectedSpots.first.x,
+                                    maxX: selectedSpots.last.x,
+                                    minY: selectedSpotsMin,
+                                    maxY: selectedSpotsMax,
+                                    lineBarsData: [
+                                      LineChartBarData(
+                                        spots: selectedSpots,
+                                        isCurved: true,
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Color.fromRGBO(0, 106, 213, 1),
+                                            Color.fromRGBO(0, 19, 150, 1),
+                                          ],
+                                        ),
+                                        barWidth: 3,
+                                        isStrokeCapRound: true,
+                                        dotData: const FlDotData(
+                                          show: false,
+                                        ),
+                                        belowBarData: BarAreaData(
+                                          show: false,
+                                          gradient: LinearGradient(
+                                            colors: const [
+                                              Color.fromRGBO(90, 106, 213, 1),
+                                              Color.fromRGBO(0, 19, 150, 1),
+                                            ]
+                                                .map((color) =>
+                                                    color.withOpacity(0.3))
+                                                .toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                                )
+                              ]),
+                        ),
                         const SizedBox(
                           width: 20,
                         ),
@@ -403,28 +434,35 @@ class _GraphScreenState extends State<GraphScreen> {
                                 child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
-                                  paused
-                                      ? Icons.play_circle_outline
-                                      : Icons
-                                          .pause_circle_outline, // Example icon
-                                  size: 150,
-                                  color: paused
-                                      ? const Color.fromRGBO(1, 173, 50, 1)
-                                      : const Color.fromRGBO(0, 19, 150, 1),
-                                  shadows: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      paused = !paused;
+                                    });
+                                  },
+                                  child: Icon(
                                     paused
-                                        ? const Shadow(
-                                            color: Color.fromRGBO(
-                                                1, 173, 50, 0.15),
-                                            offset: Offset(0, 16),
-                                            blurRadius: 40)
-                                        : const Shadow(
-                                            color: Color.fromRGBO(
-                                                0, 19, 150, 0.15),
-                                            offset: Offset(0, 16),
-                                            blurRadius: 40)
-                                  ],
+                                        ? Icons.play_circle_outline
+                                        : Icons
+                                            .pause_circle_outline, // Example icon
+                                    size: 150,
+                                    color: paused
+                                        ? const Color.fromRGBO(1, 173, 50, 1)
+                                        : const Color.fromRGBO(0, 19, 150, 1),
+                                    shadows: [
+                                      paused
+                                          ? const Shadow(
+                                              color: Color.fromRGBO(
+                                                  1, 173, 50, 0.15),
+                                              offset: Offset(0, 16),
+                                              blurRadius: 40)
+                                          : const Shadow(
+                                              color: Color.fromRGBO(
+                                                  0, 19, 150, 0.15),
+                                              offset: Offset(0, 16),
+                                              blurRadius: 40)
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 40), // Spacing
                                 Container(
@@ -500,6 +538,7 @@ class _GraphScreenState extends State<GraphScreen> {
                                             238, 242, 255, 1),
                                       ),
                                       child: TextField(
+                                        controller: rangeStart,
                                         textAlign: TextAlign.center,
                                         keyboardType: TextInputType.number,
                                         decoration: const InputDecoration(
@@ -537,6 +576,7 @@ class _GraphScreenState extends State<GraphScreen> {
                                             238, 242, 255, 1),
                                       ),
                                       child: TextField(
+                                        controller: rangeEnd,
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         decoration: const InputDecoration(
@@ -569,12 +609,13 @@ class _GraphScreenState extends State<GraphScreen> {
                                   ),
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 0, 0, 10),
-                                  child: const TextField(
-                                    decoration: InputDecoration(
+                                  child: TextField(
+                                    controller: plotName,
+                                    decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       hintText: 'Nome do gráfico',
                                     ),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.normal,
                                       fontFamily: 'Roboto',
@@ -599,14 +640,15 @@ class _GraphScreenState extends State<GraphScreen> {
                                   ),
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 0, 0, 10),
-                                  child: const TextField(
+                                  child: TextField(
+                                    controller: plotDescription,
                                     keyboardType: TextInputType.multiline,
                                     maxLines: null,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       hintText: 'Descrição',
                                     ),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.normal,
                                       fontFamily: 'Roboto',
@@ -615,26 +657,61 @@ class _GraphScreenState extends State<GraphScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: 24),
-                                const Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "Enviar para nuvem   ", // Your text here
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        fontFamily: 'Roboto',
+                                InkWell(
+                                  onTap: () async {
+                                    RenderRepaintBoundary boundary = globalKey
+                                            .currentContext!
+                                            .findRenderObject()!
+                                        as RenderRepaintBoundary;
+                                    //captures qr image
+                                    var image = await boundary.toImage();
+
+                                    ByteData? byteData = await image.toByteData(
+                                        format: ImageByteFormat.png);
+                                    Uint8List pngBytes =
+                                        byteData!.buffer.asUint8List();
+                                    final base64 = base64Encode(pngBytes);
+                                    final anchor = html.AnchorElement(
+                                        href:
+                                            'data:application/octet-stream;base64,$base64')
+                                      ..download =
+                                          "${dropdownValue}_${plotName.text}.png"
+                                      ..target = 'blank';
+
+                                    html.document.body!.append(anchor);
+                                    anchor.click();
+
+                                    downloadCSV(
+                                        plotDescription.text,
+                                        selectedSpotsName,
+                                        selectedSpots.sublist(
+                                            int.parse(rangeStart.text),
+                                            int.parse(rangeEnd.text)),
+                                        '${dropdownValue}_${plotName.text}');
+
+                                    anchor.remove();
+                                  },
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "Salvar   ", // Your text here
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          fontFamily: 'Roboto',
+                                          color: Color.fromRGBO(1, 173, 50, 1),
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.download,
+                                        size: 20,
                                         color: Color.fromRGBO(1, 173, 50, 1),
                                       ),
-                                    ),
-                                    Icon(
-                                      Icons.cloud_upload,
-                                      size: 20,
-                                      color: Color.fromRGBO(1, 173, 50, 1),
-                                    ),
-                                    SizedBox(width: 32),
-                                  ],
+                                      SizedBox(width: 32),
+                                    ],
+                                  ),
                                 )
                               ],
                             )),
@@ -698,4 +775,28 @@ Widget bottomTitleWidgets(double value, TitleMeta meta) {
     axisSide: meta.axisSide,
     child: text,
   );
+}
+
+void downloadCSV(
+    String description, String value, List<FlSpot> data, String fileName) {
+  // Combine headers and data into a CSV string
+  final csvContent = StringBuffer();
+  csvContent.writeln(description); // Add headers
+  csvContent.writeln('id,$value'); // Add headers
+
+  for (final row in data) {
+    csvContent.writeln('${row.x},${row.y}'); // Add each row of data
+  }
+
+  // Convert the CSV string to a blob and create an Object URL for it
+  final bytes = utf8.encode(csvContent.toString());
+  final blob = html.Blob([bytes], 'text/csv');
+  final url = html.Url.createObjectUrlFromBlob(blob);
+
+  // Use an anchor element for the download
+  final anchor = html.AnchorElement(href: url)
+    ..setAttribute("download", "$fileName.csv");
+
+  html.document.body!.append(anchor);
+  anchor.click();
 }

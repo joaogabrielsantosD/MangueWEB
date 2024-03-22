@@ -653,7 +653,7 @@ class _LiveScreenState extends State<LiveScreen> {
                                             sideTitles: SideTitles(
                                               showTitles: true,
                                               interval: 1000,
-                                              reservedSize: 32,
+                                              reservedSize: 50,
                                               getTitlesWidget: leftTitleWidgets,
                                             ),
                                           ),
@@ -666,7 +666,7 @@ class _LiveScreenState extends State<LiveScreen> {
                                         minX: rpmSpots.first.x,
                                         maxX: rpmSpots.last.x,
                                         minY: 0,
-                                        maxY: 6000,
+                                        maxY: 10000,
                                         lineBarsData: [
                                           LineChartBarData(
                                             spots: rpmSpots,
